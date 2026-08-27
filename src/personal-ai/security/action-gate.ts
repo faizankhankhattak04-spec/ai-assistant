@@ -19,7 +19,11 @@ export const createActionGate = (audit: AuditLog): ActionGate => {
         action: request.action,
         deviceId: request.deviceId,
         riskLevel: request.riskLevel,
-        outcome: decision.allowed ? "allowed" : "denied",
+        outcome: decision.allowed
+          ? decision.requiresConfirmation
+            ? "confirmed"
+            : "allowed"
+          : "denied",
         reason: decision.reason,
       });
       return decision;
